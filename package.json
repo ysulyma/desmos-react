@@ -1,0 +1,20 @@
+{
+  "name": "desmos-react",
+  "version": "1.0.0",
+  "description": "React wrapper for Desmos",
+  "main": "index.tsx",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ysulyma/desmos-react.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ysulyma/desmos-react/issues"
+  },
+  "homepage": "https://github.com/ysulyma/desmos-react#readme",
+  "author": "Yuri Sulyma <yuri@ractive-player.org>",
+  "license": "MIT",
+  "dependencies": {
+    "@types/react": "^17.0.6",
+    "react": "^17.0.2"
+  }
+}
