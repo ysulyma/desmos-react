@@ -1,5 +1,5 @@
 import * as React from "react";
-import {createContext, PropsWithChildren, forwardRef, useContext, useEffect, useRef, useState} from "react";
+import {createContext, forwardRef, useContext, useEffect, useRef, useState} from "react";
 
 import Desmos, {BasicCalculator, Calculator} from "desmos";
 
@@ -33,11 +33,8 @@ export function elt(calc: Calculator | BasicCalculator) {
 /* GraphingCalculator */
 export const GraphingCalculator = forwardRef<
   Calculator,
-  React.PropsWithChildren<
-    Parameters<typeof Desmos.GraphingCalculator>[1] &
-    { attributes?: React.HTMLAttributes<HTMLDivElement>; }
-  >
->(function GraphingCalculator(props, ref) {
+  Parameters<typeof Desmos.GraphingCalculator>[1] & { attributes?: React.HTMLAttributes<HTMLDivElement>; }
+  >(function GraphingCalculator(props, ref) {
   const [calculator, setCalculator] = useState<Calculator>();
   const div = useRef<HTMLDivElement>();
 
@@ -106,13 +103,11 @@ function applyRef<T>(ref: React.ForwardedRef<T>, val: T) {
 // you just couldn't help yourself could you?
 // you doofus
 function makeBasicCalculator
-  <T extends typeof Desmos.FourFunctionCalculator | typeof Desmos.ScientificCalculator>
-  (constructor: T, name: string)
+<T extends typeof Desmos.FourFunctionCalculator | typeof Desmos.ScientificCalculator>
+(constructor: T, name: string)
 {
   const component = (
-    props: React.PropsWithChildren<
-      Parameters<T>[1] & { attributes?: React.HTMLAttributes<HTMLDivElement>; }
-    >,
+    props: React.PropsWithChildren<Parameters<T>[1] & { attributes?: React.HTMLAttributes<HTMLDivElement>; }>,
     ref: React.ForwardedRef<BasicCalculator>
   ) => {
     const [calculator, setCalculator] = useState<BasicCalculator>();
@@ -143,7 +138,7 @@ function makeBasicCalculator
     return (
       <div ref={div} {...(props.attributes ?? {})}/>
     );
-  }
+  };
   // function components need to have a name
   Object.defineProperty(component, "name", {value: name});
 
@@ -167,4 +162,4 @@ export function useHelperExpression(opts: ExpressionState) {
   }, []);
 
   return value;
-};
+}

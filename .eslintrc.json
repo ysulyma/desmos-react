@@ -18,8 +18,7 @@
   },
   "plugins": [
     "@typescript-eslint",
-    "react",
-    "react-hooks"
+    "react"
   ],
   "settings": {
     "react": {
@@ -52,8 +51,7 @@
       }
     }],
 
-    "react-hooks/rules-of-hooks": "error",
-    "react-hooks/exhaustive-deps": "off",
+    "react/react-in-jsx-scope": "off",
 
     "linebreak-style": ["error", "unix"],
     "quotes": ["error", "double"],
