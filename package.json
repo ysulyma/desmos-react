@@ -3,6 +3,10 @@
   "version": "1.0.1",
   "description": "React wrapper for Desmos",
   "main": "index.js",
+  "files": [
+    "index.js",
+    "index.tsx"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ysulyma/desmos-react.git"
