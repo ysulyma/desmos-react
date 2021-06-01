@@ -1,6 +1,6 @@
 {
   "name": "desmos-react",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "React wrapper for Desmos",
   "main": "index.js",
   "files": [
