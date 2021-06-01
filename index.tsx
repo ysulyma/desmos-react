@@ -1,5 +1,5 @@
 import * as React from "react";
-import {createContext, forwardRef, useContext, useEffect, useRef, useState} from "react";
+import {createContext, forwardRef, useContext, useEffect, useRef, useState, memo} from "react";
 
 import Desmos, {BasicCalculator, Calculator} from "desmos";
 
@@ -32,9 +32,9 @@ export function elt(calc: Calculator | BasicCalculator) {
 
 /* GraphingCalculator */
 export const GraphingCalculator = forwardRef<
-  Calculator,
-  Parameters<typeof Desmos.GraphingCalculator>[1] & { attributes?: React.HTMLAttributes<HTMLDivElement>; }
-  >(function GraphingCalculator(props, ref) {
+Calculator,
+Parameters<typeof Desmos.GraphingCalculator>[1] & { attributes?: React.HTMLAttributes<HTMLDivElement>; }
+>(function GraphingCalculator(props, ref) {
   const [calculator, setCalculator] = useState<Calculator>();
   const div = useRef<HTMLDivElement>();
 
@@ -70,11 +70,19 @@ export const GraphingCalculator = forwardRef<
 /**
 A Desmos expression.
 */
-export function Expression(props: ExpressionState): null {
+export const Expression = memo(function Expression(props: ExpressionState): null {
   const calculator = useContext(DesmosContext);
+  const old = useRef<ExpressionState>({});
 
   useEffect(() => {
-    calculator.setExpression(props);
+    const update: ExpressionState = {id: props.id};
+    for (const k in props) {
+      if (props[k] !== old.current[k]) {
+        update[k] = props[k];
+      }
+    }
+    old.current = props;
+    calculator.setExpression(update);
   });
 
   useEffect(() => {
@@ -86,7 +94,7 @@ export function Expression(props: ExpressionState): null {
   }, [props.id]);
 
   return null;
-}
+});
 
 function applyRef<T>(ref: React.ForwardedRef<T>, val: T) {
   if (ref === null)
