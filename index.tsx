@@ -74,16 +74,14 @@ export const Expression = memo(function Expression(props: ExpressionState): null
   const calculator = useContext(DesmosContext);
   const old = useRef<ExpressionState>({});
 
-  useEffect(() => {
-    const update: ExpressionState = {id: props.id};
-    for (const k in props) {
-      if (props[k] !== old.current[k]) {
-        update[k] = props[k];
-      }
+  const update: ExpressionState = {id: props.id};
+  for (const k in props) {
+    if (props[k] !== old.current[k]) {
+      update[k] = props[k];
     }
-    old.current = props;
-    calculator.setExpression(update);
-  });
+  }
+  old.current = props;
+  calculator.setExpression(update);
 
   useEffect(() => {
     return () => {
