@@ -1,41 +1,37 @@
-import * as React from "react";
 import {createContext, forwardRef, useContext, useEffect, useRef, useState, memo} from "react";
 
-import Desmos, {BasicCalculator, Calculator} from "desmos";
-
-// forgot to export
-type ExpressionState = Parameters<Calculator["setExpression"]>[0];
-
-const DesmosContext = createContext<Calculator>(null);
+const DesmosContext = createContext<Desmos.Calculator>(null);
 
 /* elt() */
-declare module "desmos" {
-  interface BasicCalculator {
-    domChangeDetector: {
-      elt: HTMLDivElement;
-    };
-  }
+declare global {
+  namespace Desmos {
+    interface BasicCalculator {
+      domChangeDetector: {
+        elt: HTMLDivElement;
+      };
+    }
 
-  interface Calculator {
-    domChangeDetector: {
-      elt: HTMLDivElement;
-    };
+    interface Calculator {
+      domChangeDetector: {
+        elt: HTMLDivElement;
+      };
+    }
   }
 }
 
 /**
 Get the container element of a calculator.
 */
-export function elt(calc: Calculator | BasicCalculator) {
+export function elt(calc: Desmos.Calculator | Desmos.BasicCalculator) {
   return calc.domChangeDetector.elt;
 }
 
 /* GraphingCalculator */
 export const GraphingCalculator = forwardRef<
-Calculator,
-Parameters<typeof Desmos.GraphingCalculator>[1] & { attributes?: React.HTMLAttributes<HTMLDivElement>; }
+Desmos.Calculator,
+React.PropsWithChildren<Parameters<typeof Desmos.GraphingCalculator>[1] & { attributes?: React.HTMLAttributes<HTMLDivElement>; }>
 >(function GraphingCalculator(props, ref) {
-  const [calculator, setCalculator] = useState<Calculator>();
+  const [calculator, setCalculator] = useState<Desmos.Calculator>();
   const div = useRef<HTMLDivElement>();
 
   useEffect(() => {
@@ -70,11 +66,11 @@ Parameters<typeof Desmos.GraphingCalculator>[1] & { attributes?: React.HTMLAttri
 /**
 A Desmos expression.
 */
-export const Expression = memo(function Expression(props: ExpressionState): null {
+export const Expression = memo(function Expression(props: Desmos.ExpressionState): null {
   const calculator = useContext(DesmosContext);
-  const old = useRef<ExpressionState>({});
+  const old = useRef<Desmos.ExpressionState>({});
 
-  const update: ExpressionState = {id: props.id};
+  const update: Desmos.ExpressionState = {id: props.id};
   for (const k in props) {
     if (props[k] !== old.current[k]) {
       update[k] = props[k];
@@ -114,9 +110,9 @@ function makeBasicCalculator
 {
   const component = (
     props: React.PropsWithChildren<Parameters<T>[1] & { attributes?: React.HTMLAttributes<HTMLDivElement>; }>,
-    ref: React.ForwardedRef<BasicCalculator>
+    ref: React.ForwardedRef<Desmos.BasicCalculator>
   ) => {
-    const [calculator, setCalculator] = useState<BasicCalculator>();
+    const [calculator, setCalculator] = useState<Desmos.BasicCalculator>();
     const div = useRef<HTMLDivElement>();
 
     // create calculator
@@ -155,10 +151,10 @@ export const FourFunctionCalculator = makeBasicCalculator(Desmos.FourFunctionCal
 export const ScientificCalculator = makeBasicCalculator(Desmos.ScientificCalculator, "ScientificCalculator");
 
 // hooks
-export function useHelperExpression(opts: ExpressionState) {
+export function useHelperExpression(opts: Desmos.ExpressionState) {
   const calculator = useContext(DesmosContext);
 
-  const helper = useRef<ReturnType<Calculator["HelperExpression"]>>();
+  const helper = useRef<ReturnType<Desmos.Calculator["HelperExpression"]>>();
   if (helper.current === undefined) {
     helper.current = calculator.HelperExpression(opts);
   }
