@@ -11,14 +11,13 @@ import {Expression, GraphingCalculator, useHelperExpression} from "desmos-react"
 
 function Demo() {
   return (
-      <GraphingCalculator
-        attributes={{className: "calculator"}}
-        fontSize={18} keypad projectorMode
-      >
-        <Expression id="slider" latex="a=3"/>
-        <Point/>
-      </GraphingCalculator>
-    </>
+    <GraphingCalculator
+      attributes={{className: "calculator"}}
+      fontSize={18} keypad projectorMode
+    >
+      <Expression id="slider" latex="a=3" />
+      <Point />
+    </GraphingCalculator>
   );
 }
 
@@ -36,7 +35,7 @@ function Point() {
     label = "origin";
 
   return (
-    <Expression id="point" latex="(a,0)" label={label} showLabel/>
+    <Expression id="point" latex="(a,0)" label={label} showLabel />
   );
 }
 ```
