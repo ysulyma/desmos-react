@@ -6,4 +6,5 @@
 /node_modules
 
 # generated files
+index.d.ts
 index.js
