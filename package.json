@@ -17,7 +17,7 @@
     "url": "https://github.com/ysulyma/desmos-react/issues"
   },
   "homepage": "https://github.com/ysulyma/desmos-react#readme",
-  "author": "Yuri Sulyma <yuri@ractive-player.org>",
+  "author": "Yuri Sulyma <yuri@liqvidjs.org>",
   "license": "MIT",
   "scripts": {
     "build": "tsc"
