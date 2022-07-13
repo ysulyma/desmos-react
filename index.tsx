@@ -20,13 +20,15 @@ declare global {
 }
 
 /**
-Get the container element of a calculator.
-*/
-export function elt(calc: Desmos.Calculator | Desmos.BasicCalculator) {
+ * Get the container element of a calculator.
+ */
+export function elt(calc: Desmos.Calculator | Desmos.BasicCalculator): HTMLDivElement {
   return calc.domChangeDetector.elt;
 }
 
-/* GraphingCalculator */
+/**
+ * The Desmos graphing calculator.
+ */
 export const GraphingCalculator = forwardRef<
 Desmos.Calculator,
 React.PropsWithChildren<Parameters<typeof Desmos.GraphingCalculator>[1] & { attributes?: React.HTMLAttributes<HTMLDivElement>; }>
@@ -64,8 +66,8 @@ React.PropsWithChildren<Parameters<typeof Desmos.GraphingCalculator>[1] & { attr
 });
 
 /**
-A Desmos expression.
-*/
+ * A Desmos {@link https://www.desmos.com/api/v1.6/docs/index.html#document-expressions expression}.
+ */
 export const Expression = memo(function Expression(props: Desmos.ExpressionState): null {
   const calculator = useContext(DesmosContext);
   const old = useRef<Desmos.ExpressionState>({});
@@ -147,11 +149,21 @@ function makeBasicCalculator
   return forwardRef(component);
 }
 
+/**
+ * The Desmos four-function calculator.
+ */
 export const FourFunctionCalculator = makeBasicCalculator(Desmos.FourFunctionCalculator, "FourFunctionCalculator");
+
+/**
+ * The Desmos scientific calculator.
+ */
 export const ScientificCalculator = makeBasicCalculator(Desmos.ScientificCalculator, "ScientificCalculator");
 
 // hooks
-export function useHelperExpression(opts: Desmos.ExpressionState) {
+/**
+ * Subscribe to a Desmos {@link https://www.desmos.com/api/v1.6/docs/index.html#document-helper-expressions Helper Expression}.
+ */
+export function useHelperExpression(opts: Desmos.ExpressionState): number {
   const calculator = useContext(DesmosContext);
 
   const helper = useRef<ReturnType<Desmos.Calculator["HelperExpression"]>>();
