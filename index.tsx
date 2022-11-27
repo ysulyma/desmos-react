@@ -69,7 +69,7 @@ React.PropsWithChildren<Parameters<typeof Desmos.GraphingCalculator>[1] & { attr
  * A Desmos {@link https://www.desmos.com/api/v1.6/docs/index.html#document-expressions expression}.
  */
 export const Expression = memo(function Expression(props: Desmos.ExpressionState): null {
-  const calculator = useContext(DesmosContext);
+  const calculator = useCalculator();
   const old = useRef<Desmos.ExpressionState>({});
 
   const update: Desmos.ExpressionState = {id: props.id};
@@ -161,10 +161,17 @@ export const ScientificCalculator = makeBasicCalculator(Desmos.ScientificCalcula
 
 // hooks
 /**
+ * Get a reference to the containing {@link Calculator}.
+ */
+export function useCalculator(): Desmos.Calculator {
+  return useContext(DesmosContext);
+}
+
+/**
  * Subscribe to a Desmos {@link https://www.desmos.com/api/v1.6/docs/index.html#document-helper-expressions Helper Expression}.
  */
 export function useHelperExpression(opts: Desmos.ExpressionState): number {
-  const calculator = useContext(DesmosContext);
+  const calculator = useCalculator();
 
   const helper = useRef<ReturnType<Desmos.Calculator["HelperExpression"]>>();
   if (helper.current === undefined) {
