@@ -4,6 +4,12 @@ This package provides a wrapper to use the [Desmos API](https://www.desmos.com/a
 
 **This package is not affiliated with Desmos. To use this in your product or obtain an API key, please reach out to partnerships@desmos.com.**
 
+## Installation
+
+```bash
+npm install desmos-react
+```
+
 ## Usage
 
 ```tsx
